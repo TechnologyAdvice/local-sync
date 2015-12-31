@@ -1,0 +1,8 @@
+#
+# Heads Up!
+#
+# Each line of this file is passed to `rm -rf` on `npm run clean`
+#
+
+node_modules/
+*.log*
