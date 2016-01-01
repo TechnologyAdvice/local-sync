@@ -4,7 +4,7 @@ Local Sync
 A friendly, tiny, synchronous, namespaced, and _dependency free_ local storage solution.
 
 ```
-npm i @technologyadvice/local-sync -S
+npm i local-sync -S
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ ls = new LocalSync('fish')        // same as setBucket()
 
 ls.setBucket('BikiniBottom')      // => 'BikiniBottom'
 ls.getBucket()                    // => 'BikiniBottom'
-``
+```
 
 List all buckets in storage.
 
@@ -73,6 +73,7 @@ ls.values()
 //   {address: '124 Conch Street', name: 'SpongeBob'},
 //   ['Squidward!', 'Why so crabby, Patty?']
 // ]
+```
 
 List all keys and values in storage.
 
@@ -92,6 +93,7 @@ Remove a single value by key or clear all values.
 ls.remove('bob')
 ls.keys()
 // => ['quotes']
+```
 
 Clear all keys and values.
 
