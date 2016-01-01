@@ -4,7 +4,7 @@ Local Sync
 A friendly, tiny, synchronous, namespaced, and _dependency free_ local storage solution.
 
 ```
-npm i local-sync -S
+npm i @technologyadvice/local-sync -S
 ```
 
 ## Usage
@@ -19,8 +19,12 @@ npm i local-sync -S
 Set or get the current bucket. Subsequent methods operate only in the current bucket namespace.
 
 ```js
-ls = new LocalSync()              // 'default' bucket
-ls = new LocalSync('fish')        // same as setBucket()
+ls = new LocalSync()              // default settings
+ls = new LocalSync({              // custom settings
+  prefix: 'ocean',
+  bucket: 'fish',
+  separator: '~'
+})
 
 ls.setBucket('BikiniBottom')      // => 'BikiniBottom'
 ls.getBucket()                    // => 'BikiniBottom'
