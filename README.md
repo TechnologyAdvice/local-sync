@@ -4,7 +4,7 @@ Local Sync
 A friendly, tiny, synchronous, namespaced, and _dependency free_ local storage solution.
 
 ```
-npm i local-sync -S
+npm i @technologyadvice/local-sync -S
 ```
 
 ## Usage
