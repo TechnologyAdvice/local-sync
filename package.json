@@ -10,6 +10,7 @@
   ],
   "main": "./dist/local-sync.js",
   "scripts": {
+    "start": "npm run build:watch & live-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "while read line; do rm -rf $line; done < .gitignore",
     "clean:dist": "rm -rf dist",
@@ -24,7 +25,9 @@
     "docs": "jsdoc2md --template README.hbs src/**/*.js > README.md",
     "build:production": "npm run webpack -- -p --output-filename local-sync.min.js"
   },
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TechnologyAdvice/local-sync.git"
@@ -45,6 +48,7 @@
     "debug": "^2.2.0",
     "eslint-config-ta": "^3.1.1",
     "jsdoc-to-markdown": "^1.3.2",
+    "live-server": "^0.9.0",
     "pre-commit": "^1.1.2",
     "watch": "^0.17.1",
     "webpack": "^1.12.9"

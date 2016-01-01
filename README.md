@@ -4,7 +4,7 @@ Local Sync
 A friendly, tiny, synchronous, namespaced, and _dependency free_ local storage solution.
 
 ```
-npm i @technologyadvice/local-sync -S
+npm i local-sync -S
 ```
 
 ## Usage
@@ -107,6 +107,7 @@ ls.keys()
 ## API
   
 * [LocalSync](#LocalSync)
+    * [new LocalSync([options])](#new_LocalSync_new)
     * _instance_
         * [.setBucket(bucket)](#LocalSync+setBucket) ⇒ <code>String</code>
         * [.getBucket()](#LocalSync+getBucket) ⇒ <code>String</code>
@@ -120,9 +121,21 @@ ls.keys()
         * [.values()](#LocalSync+values) ⇒ <code>Array.&lt;\*&gt;</code>
         * [.getAll()](#LocalSync+getAll) ⇒ <code>Array.&lt;Object&gt;</code>
     * _static_
-        * [.DEFAULT_BUCKET](#LocalSync.DEFAULT_BUCKET) : <code>string</code>
+        * [.BUCKET](#LocalSync.BUCKET) : <code>string</code>
         * [.PREFIX](#LocalSync.PREFIX) : <code>string</code>
         * [.SEPARATOR](#LocalSync.SEPARATOR) : <code>string</code>
+
+<a name="new_LocalSync_new"></a>
+### new LocalSync([options])
+Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> | <code>{}</code> | The bucket namespace to use. |
+| [options.bucket] | <code>String</code> | <code>LocalSync.BUCKET</code> | The bucket namespace to use. |
+| [options.prefix] | <code>String</code> | <code>LocalSync.PREFIX</code> | The key prefix namespace to use. |
+| [options.separator] | <code>String</code> | <code>LocalSync.SEPARATOR</code> | Separates prefix, bucket, and keys. |
 
 <a name="LocalSync+setBucket"></a>
 ### localSync.setBucket(bucket) ⇒ <code>String</code>
@@ -216,8 +229,8 @@ Get all key/value pairs in the current bucket.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 **Returns**: <code>Array.&lt;Object&gt;</code> - An array of objects `{<key>: <value>}`.  
-<a name="LocalSync.DEFAULT_BUCKET"></a>
-### LocalSync.DEFAULT_BUCKET : <code>string</code>
+<a name="LocalSync.BUCKET"></a>
+### LocalSync.BUCKET : <code>string</code>
 The default bucket name for new instances.
 
 **Kind**: static property of <code>[LocalSync](#LocalSync)</code>  

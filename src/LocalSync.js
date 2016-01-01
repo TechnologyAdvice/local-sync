@@ -17,15 +17,27 @@ const storageLength = () => localStorage.length
 
 class LocalSync {
   /**
-   * @class
+   * Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
+   * @param {Object} [options={}] The bucket namespace to use.
+   * @param {String} [options.bucket=LocalSync.BUCKET] The bucket namespace to use.
+   * @param {String} [options.prefix=LocalSync.PREFIX] The key prefix namespace to use.
+   * @param {String} [options.separator=LocalSync.SEPARATOR] Separates prefix, bucket, and keys.
+   * @constructor
    */
-  constructor() {
-    /**
-     * The current working namespace in storage. Methods will only operate on `key`s in this namespace.
-     * @type {String}
-     * @private
-     */
-    this._bucket = LocalSync.DEFAULT_BUCKET
+  constructor(options = {}) {
+    if (!(options instanceof Object)) throw new Error('LocalSync "options" must be an object.')
+
+    const bucket = options.bucket || LocalSync.BUCKET
+    const prefix = options.prefix || LocalSync.PREFIX
+    const separator = options.separator || LocalSync.SEPARATOR
+
+    this._validateBucket(bucket)
+    this._validatePrefix(prefix)
+    this._validateSeparator(separator)
+
+    this._bucket = bucket
+    this._prefix = prefix
+    this._separator = separator
   }
 
   // --------------------------------------------------------
@@ -61,7 +73,7 @@ class LocalSync {
     // iterate in reverse for max speed and index preservation when removing items
     for (let i = storageLength() - 1; i >= 0; --i) {
       const fullKey = storageKey(i)
-      if (fullKey.startsWith(LocalSync.PREFIX)) {
+      if (fullKey.startsWith(this._prefix)) {
         result.unshift(callback(this._parseBucket(fullKey)))
       }
     }
@@ -74,7 +86,7 @@ class LocalSync {
    * @private
    */
   _fullBucket() {
-    return [LocalSync.PREFIX, this._bucket].join(LocalSync.SEPARATOR)
+    return [this._prefix, this._bucket].join(this._separator)
   }
 
   /**
@@ -84,7 +96,7 @@ class LocalSync {
    * @private
    */
   _fullKey(key) {
-    return [this._fullBucket(), key].join(LocalSync.SEPARATOR)
+    return [this._fullBucket(), key].join(this._separator)
   }
 
   /**
@@ -94,8 +106,8 @@ class LocalSync {
    * @private
    */
   _parseBucket(fullKey) {
-    const prefix = escapeRegExp(LocalSync.PREFIX)
-    const separator = escapeRegExp(LocalSync.SEPARATOR)
+    const prefix = escapeRegExp(this._prefix)
+    const separator = escapeRegExp(this._separator)
     const re = new RegExp(`${prefix}${separator}(.*)${separator}`)
     const match = fullKey.match(re)
     return match && match[1] || undefined
@@ -114,6 +126,29 @@ class LocalSync {
   }
 
   /**
+   * Throw if `prefix` is not valid.
+   * @param {string} prefix The value to be validated.
+   * @private
+   */
+  _validatePrefix(prefix) {
+    if (typeof prefix !== 'string') throw new Error(`LocalSync "prefix" must be a string.`)
+    if (prefix.includes(' ')) throw new Error(`LocalSync "prefix" cannot contain spaces.`)
+    if (prefix.includes(this._separator)) {
+      throw new Error(`LocalSync "prefix" cannot contain the separator "${this._separator}".`)
+    }
+  }
+
+  /**
+   * Throw if `separator` is not valid.
+   * @param {string} separator The value to be validated.
+   * @private
+   */
+  _validateSeparator(separator) {
+    if (typeof separator !== 'string') throw new Error(`LocalSync "separator" must be a string.`)
+    if (separator.length !== 1) throw new Error(`LocalSync "separator" must be a single character.`)
+  }
+
+  /**
    * Throw if `bucket` is not valid.
    * @param {string} bucket The value to be validated.
    * @private
@@ -121,8 +156,8 @@ class LocalSync {
   _validateBucket(bucket) {
     if (typeof bucket !== 'string') throw new Error(`LocalSync "bucket" must be a string.`)
     if (bucket.includes(' ')) throw new Error(`LocalSync "bucket" cannot contain spaces.`)
-    if (bucket.includes(LocalSync.SEPARATOR)) {
-      throw new Error(`LocalSync "bucket" cannot contain the separator "${LocalSync.SEPARATOR}".`)
+    if (bucket.includes(this._separator)) {
+      throw new Error(`LocalSync "bucket" cannot contain the separator "${this._separator}".`)
     }
   }
 
@@ -133,8 +168,8 @@ class LocalSync {
    */
   _validateKey(key) {
     if (typeof key !== 'string') throw new Error(`LocalSync "key" parameter must be a string.`)
-    if (key.includes(LocalSync.SEPARATOR)) {
-      throw new Error(`LocalSync "key" cannot contain the separator "${LocalSync.SEPARATOR}".`)
+    if (key.includes(this._separator)) {
+      throw new Error(`LocalSync "key" cannot contain the separator "${this._separator}".`)
     }
   }
 
@@ -303,7 +338,7 @@ class LocalSync {
  * @type {string}
  * @static
  */
-LocalSync.DEFAULT_BUCKET = 'default'
+LocalSync.BUCKET = 'default'
 
 /**
  * The default key prefix new instances.

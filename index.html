@@ -2,10 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Local Sync</title>
   <script src="dist/local-sync.js"></script>
 </head>
 <body>
-
+  <h1>Local Sync Testing</h1>
+  <p>Use the console.</p>
+  <p>Try this:</p>
+  <pre>
+ls = new LocalSync()
+console.log('setBucket =>', ls.setBucket('BikiniBottom'))
+console.log('set =>', ls.set('bob', {name: 'SpongeBob'}))
+console.log('get =>', ls.get('bob'))
+console.log('set =>', ls.set('quotes', ['Squidward!']))
+console.log('get =>', ls.get('quotes'))
+console.log('put =>', ls.put('bob', {address: '124 Conch Street'}))
+console.log('put =>', ls.put('quotes', ['Why so crabby, Patty?']))
+console.log('keys =>', ls.keys())
+console.log('values =>', ls.values())
+console.log('getAll =>', ls.getAll())
+console.log('remove =>', ls.remove('bob'))
+console.log('keys =>', ls.keys())
+console.log('clear =>', ls.clear())
+console.log('keys =>', ls.keys())
+console.log('--------------------------------------------------------')
+console.log('setBucket =>', ls.setBucket('new'))
+console.log('set =>', ls.set('blah', 'stuff'))
+console.log('setBucket =>', ls.setBucket('another'))
+console.log('getBucket =>', ls.getBucket())
+console.log('allBuckets =>', ls.allBuckets())
+  </pre>
 </body>
 </html>

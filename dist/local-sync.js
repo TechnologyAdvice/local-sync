@@ -97,18 +97,32 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var LocalSync = (function () {
 	  /**
-	   * @class
+	   * Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
+	   * @param {Object} [options={}] The bucket namespace to use.
+	   * @param {String} [options.bucket=LocalSync.BUCKET] The bucket namespace to use.
+	   * @param {String} [options.prefix=LocalSync.PREFIX] The key prefix namespace to use.
+	   * @param {String} [options.separator=LocalSync.SEPARATOR] Separates prefix, bucket, and keys.
+	   * @constructor
 	   */
 
 	  function LocalSync() {
+	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
 	    _classCallCheck(this, LocalSync);
 
-	    /**
-	     * The current working namespace in storage. Methods will only operate on `key`s in this namespace.
-	     * @type {String}
-	     * @private
-	     */
-	    this._bucket = LocalSync.DEFAULT_BUCKET;
+	    if (!(options instanceof Object)) throw new Error('LocalSync "options" must be an object.');
+
+	    var bucket = options.bucket || LocalSync.BUCKET;
+	    var prefix = options.prefix || LocalSync.PREFIX;
+	    var separator = options.separator || LocalSync.SEPARATOR;
+
+	    this._validateBucket(bucket);
+	    this._validatePrefix(prefix);
+	    this._validateSeparator(separator);
+
+	    this._bucket = bucket;
+	    this._prefix = prefix;
+	    this._separator = separator;
 	  }
 
 	  // --------------------------------------------------------
@@ -150,7 +164,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // iterate in reverse for max speed and index preservation when removing items
 	      for (var i = storageLength() - 1; i >= 0; --i) {
 	        var fullKey = storageKey(i);
-	        if (fullKey.startsWith(LocalSync.PREFIX)) {
+	        if (fullKey.startsWith(this._prefix)) {
 	          result.unshift(callback(this._parseBucket(fullKey)));
 	        }
 	      }
@@ -166,7 +180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_fullBucket',
 	    value: function _fullBucket() {
-	      return [LocalSync.PREFIX, this._bucket].join(LocalSync.SEPARATOR);
+	      return [this._prefix, this._bucket].join(this._separator);
 	    }
 
 	    /**
@@ -179,7 +193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_fullKey',
 	    value: function _fullKey(key) {
-	      return [this._fullBucket(), key].join(LocalSync.SEPARATOR);
+	      return [this._fullBucket(), key].join(this._separator);
 	    }
 
 	    /**
@@ -192,8 +206,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_parseBucket',
 	    value: function _parseBucket(fullKey) {
-	      var prefix = escapeRegExp(LocalSync.PREFIX);
-	      var separator = escapeRegExp(LocalSync.SEPARATOR);
+	      var prefix = escapeRegExp(this._prefix);
+	      var separator = escapeRegExp(this._separator);
 	      var re = new RegExp('' + prefix + separator + '(.*)' + separator);
 	      var match = fullKey.match(re);
 	      return match && match[1] || undefined;
@@ -215,6 +229,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * Throw if `prefix` is not valid.
+	     * @param {string} prefix The value to be validated.
+	     * @private
+	     */
+
+	  }, {
+	    key: '_validatePrefix',
+	    value: function _validatePrefix(prefix) {
+	      if (typeof prefix !== 'string') throw new Error('LocalSync "prefix" must be a string.');
+	      if (prefix.includes(' ')) throw new Error('LocalSync "prefix" cannot contain spaces.');
+	      if (prefix.includes(this._separator)) {
+	        throw new Error('LocalSync "prefix" cannot contain the separator "' + this._separator + '".');
+	      }
+	    }
+
+	    /**
+	     * Throw if `separator` is not valid.
+	     * @param {string} separator The value to be validated.
+	     * @private
+	     */
+
+	  }, {
+	    key: '_validateSeparator',
+	    value: function _validateSeparator(separator) {
+	      if (typeof separator !== 'string') throw new Error('LocalSync "separator" must be a string.');
+	      if (separator.length !== 1) throw new Error('LocalSync "separator" must be a single character.');
+	    }
+
+	    /**
 	     * Throw if `bucket` is not valid.
 	     * @param {string} bucket The value to be validated.
 	     * @private
@@ -225,8 +268,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _validateBucket(bucket) {
 	      if (typeof bucket !== 'string') throw new Error('LocalSync "bucket" must be a string.');
 	      if (bucket.includes(' ')) throw new Error('LocalSync "bucket" cannot contain spaces.');
-	      if (bucket.includes(LocalSync.SEPARATOR)) {
-	        throw new Error('LocalSync "bucket" cannot contain the separator "' + LocalSync.SEPARATOR + '".');
+	      if (bucket.includes(this._separator)) {
+	        throw new Error('LocalSync "bucket" cannot contain the separator "' + this._separator + '".');
 	      }
 	    }
 
@@ -240,8 +283,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_validateKey',
 	    value: function _validateKey(key) {
 	      if (typeof key !== 'string') throw new Error('LocalSync "key" parameter must be a string.');
-	      if (key.includes(LocalSync.SEPARATOR)) {
-	        throw new Error('LocalSync "key" cannot contain the separator "' + LocalSync.SEPARATOR + '".');
+	      if (key.includes(this._separator)) {
+	        throw new Error('LocalSync "key" cannot contain the separator "' + this._separator + '".');
 	      }
 	    }
 
@@ -459,7 +502,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @static
 	 */
 
-	LocalSync.DEFAULT_BUCKET = 'default';
+	LocalSync.BUCKET = 'default';
 
 	/**
 	 * The default key prefix new instances.
