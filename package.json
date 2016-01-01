@@ -15,7 +15,7 @@
     "prebuild": "npm run clean:build",
     "build": "npm run webpack && npm run build:production && npm run docs",
     "build:watch": "npm run watch -- 'npm run build'",
-    "docs": "jsdoc2md --template src/README.hbs src/**/*.js > README.md",
+    "docs": "jsdoc2md --template README.hbs src/**/*.js > README.md",
     "build:production": "npm run webpack -- -p --output-filename ${npm_package_name}.min.js"
   },
   "pre-commit": ["lint"],

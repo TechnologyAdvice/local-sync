@@ -40,6 +40,7 @@ const options = {
       /dist/,
       /node_modules/,
       /README\.md/,
+      /\.log*/,
     ].some(regEx => regEx.test(file))
 
     if (!isExcluded) debug(file)

@@ -9,43 +9,44 @@ npm i @technologyadvice/local-sync -S
 
 ## Usage
 
-[Bucket](#bucket)
-[Set / Get](#set-/-get)
-[Put](#put)
-[Keys / Values / All](#keys-/-values-/-all)
-[Remove / Clear](#remove-/-clear)
+- [Buckets](#buckets)
+- [set, get, put](#set-get-put)
+- [remove, clear](#remove-clear)
+- [keys, values, getAll](#keys-values-getall)
 
-### Bucket
+### Buckets
 
-Methods operate only in the current bucket namespace.
+Set or get the current bucket. Subsequent methods operate only in the current bucket namespace.
 
 ```js
-const ls = new LocalSync()
-// => bucket is 'default'
+ls = new LocalSync()              // 'default' bucket
+ls = new LocalSync('fish')        // same as setBucket()
 
-const ls = new LocalSync('BikiniBottom')
-// => bucket is 'BikiniBottom'
+ls.setBucket('BikiniBottom')      // => 'BikiniBottom'
+ls.getBucket()                    // => 'BikiniBottom'
+``
+
+List all buckets in storage.
+
+```js
+ls.allBuckets()                   // => [...buckets]
 ```
 
-### Set / Get
+### set, get, put
 
-Set / get any JSON serializable data type.
+Use any JSON serializable data type.
 
 ```js
 ls.set('bob', {name: 'SpongeBob'})
-// => {name: 'SpongeBob'}
 ls.get('bob')
 // => {name: 'SpongeBob'}
 
 ls.set('quotes', ['Squidward!'])
-// => ['Squidward!]
 ls.get('quotes')
 // => ['Squidward!]
 ```
 
-### Put
-
-Patch stored objects and arrays.
+Update stored objects and arrays.
 
 ```js
 ls.put('bob', {address: '124 Conch Street'})
@@ -55,38 +56,48 @@ ls.put('quotes', ['Why so crabby, Patty?'])
 // => ['Squidward!', 'Why so crabby, Patty?']
 ```
 
-### Keys / Values / All
+### keys, values, getAll
 
-List stored keys, values, or key/value pairs as objects.
+List all keys in storage.
 
 ```js
 ls.keys()
 // => ['bob', 'quotes']
+```
 
+List all values in storage.
+
+```js
 ls.values()
 // [
 //   {address: '124 Conch Street', name: 'SpongeBob'},
 //   ['Squidward!', 'Why so crabby, Patty?']
 // ]
 
-ls.all()
+List all keys and values in storage.
+
+```js
+ls.getAll()
 // [
 //   {address: '124 Conch Street', name: 'SpongeBob'},
 //   {quotes: ['Squidward!', 'Why so crabby, Patty?']}
 // ]
 ```
 
-### Remove / Clear
+### remove, clear
 
 Remove a single value by key or clear all values.
 
 ```js
 ls.remove('bob')
-ls.all()
-// => [{quotes: ['Squidward!']}]
+ls.keys()
+// => ['quotes']
 
+Clear all keys and values.
+
+```js
 ls.clear()
-ls.all()
+ls.keys()
 // => []
 ```
 
