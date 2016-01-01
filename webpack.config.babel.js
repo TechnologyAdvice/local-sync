@@ -1,12 +1,10 @@
-import pkg from './package.json'
-
 const config = {
   entry: `${__dirname}/src/LocalSync.js`,
   output: {
     libraryTarget: 'umd',
     library: 'LocalSync',
     path: 'dist',
-    filename: `${pkg.name}.js`,
+    filename: `local-sync.js`,
   },
   module: {
     loaders: [

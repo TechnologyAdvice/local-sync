@@ -1,5 +1,5 @@
 {
-  "name": "local-sync",
+  "name": "@technologyadvice/local-sync",
   "version": "1.0.0",
   "description": "A friendly, tiny, synchronous, namespaced, and dependency free local storage solution.",
   "keywords": [
@@ -12,17 +12,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "while read line; do rm -rf $line; done < .gitignore",
-    "clean:build": "rm -rf dist",
+    "clean:dist": "rm -rf dist",
     "lint": "eslint .",
     "lint:watch": "npm run watch -- 'npm run lint --silent'",
     "lint:fix": "npm run lint -- --fix",
     "watch": "DEBUG=watch babel-node scripts/watch.js",
     "webpack": "webpack --config webpack.config.babel.js",
-    "prebuild": "npm run clean:build",
+    "prebuild": "npm run clean:dist",
     "build": "npm run webpack && npm run build:production && npm run docs",
     "build:watch": "npm run watch -- 'npm run build'",
     "docs": "jsdoc2md --template README.hbs src/**/*.js > README.md",
-    "build:production": "npm run webpack -- -p --output-filename ${npm_package_name}.min.js"
+    "build:production": "npm run webpack -- -p --output-filename local-sync.min.js"
   },
   "pre-commit": ["lint"],
   "repository": {
