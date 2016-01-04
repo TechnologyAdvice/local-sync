@@ -181,6 +181,7 @@ class LocalSync {
   _validateValue(value) {
     const validTypes = [
       '[object Array]',
+      '[object Boolean]',
       '[object Null]',
       '[object Number]',
       '[object Object]',
