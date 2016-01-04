@@ -190,7 +190,7 @@ class LocalSync {
     ]
     const valueType = Object.prototype.toString.call(value)
     if (!validTypes.some(type => valueType === type)) {
-      throw new Error(`LocalSync "value" of type ${valueType} is not supported.`)
+      throw new Error(`LocalSync cannot store "value" of type ${valueType}`)
     }
   }
 
