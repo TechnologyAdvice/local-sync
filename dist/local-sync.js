@@ -302,7 +302,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!validTypes.some(function (type) {
 	        return valueType === type;
 	      })) {
-	        throw new Error('LocalSync "value" of type ' + valueType + ' is not supported.');
+	        throw new Error('LocalSync cannot store "value" of type ' + valueType);
 	      }
 	    }
 
