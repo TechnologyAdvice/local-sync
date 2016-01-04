@@ -297,7 +297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_validateValue',
 	    value: function _validateValue(value) {
-	      var validTypes = ['[object Array]', '[object Null]', '[object Number]', '[object Object]', '[object String]', '[object Undefined]'];
+	      var validTypes = ['[object Array]', '[object Boolean]', '[object Null]', '[object Number]', '[object Object]', '[object String]', '[object Undefined]'];
 	      var valueType = Object.prototype.toString.call(value);
 	      if (!validTypes.some(function (type) {
 	        return valueType === type;
