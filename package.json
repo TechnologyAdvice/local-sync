@@ -14,6 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "while read line; do rm -rf $line; done < .gitignore",
     "clean:dist": "rm -rf dist",
+    "deploy": "git push && git push --follow-tags && echo 'NPM Login:' $(npm access ls-collaborators) && npm login && npm publish",
     "lint": "eslint .",
     "lint:watch": "npm run watch -- 'npm run lint --silent'",
     "lint:fix": "npm run lint -- --fix",
