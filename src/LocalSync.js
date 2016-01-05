@@ -19,25 +19,17 @@ class LocalSync {
   /**
    * Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
    * @param {Object} [options={}] Instance options.
-   * @param {String} [options.bucket=LocalSync.BUCKET] The bucket namespace to use.
-   * @param {String} [options.prefix=LocalSync.PREFIX] The key prefix namespace to use.
-   * @param {String} [options.separator=LocalSync.SEPARATOR] Separates prefix, bucket, and keys.
+   * @param {String} [options.bucket=default] The bucket namespace to use.
+   * @param {String} [options.prefix=ls] The key prefix namespace to use.
+   * @param {String} [options.separator=.] Separates prefix, bucket, and keys.
    * @constructor
    */
   constructor(options = {}) {
     if (!(options instanceof Object)) throw new Error('LocalSync "options" must be an object.')
 
-    const bucket = options.bucket || LocalSync.BUCKET
-    const prefix = options.prefix || LocalSync.PREFIX
-    const separator = options.separator || LocalSync.SEPARATOR
-
-    this._validateBucket(bucket)
-    this._validatePrefix(prefix)
-    this._validateSeparator(separator)
-
-    this._bucket = bucket
-    this._prefix = prefix
-    this._separator = separator
+    this._bucket = this._validateBucket(options.bucket || 'default')
+    this._prefix = this._validatePrefix(options.prefix || 'ls')
+    this._separator = this._validateSeparator(options.separator || '.')
   }
 
   // --------------------------------------------------------
@@ -128,6 +120,7 @@ class LocalSync {
   /**
    * Throw if `prefix` is not valid.
    * @param {string} prefix The value to be validated.
+   * @returns {string} The validated `prefix`.
    * @private
    */
   _validatePrefix(prefix) {
@@ -136,21 +129,25 @@ class LocalSync {
     if (prefix.includes(this._separator)) {
       throw new Error(`LocalSync "prefix" cannot contain the separator "${this._separator}".`)
     }
+    return prefix
   }
 
   /**
    * Throw if `separator` is not valid.
    * @param {string} separator The value to be validated.
+   * @returns {string} The validated `separator`.
    * @private
    */
   _validateSeparator(separator) {
     if (typeof separator !== 'string') throw new Error(`LocalSync "separator" must be a string.`)
     if (separator.length !== 1) throw new Error(`LocalSync "separator" must be a single character.`)
+    return separator
   }
 
   /**
    * Throw if `bucket` is not valid.
    * @param {string} bucket The value to be validated.
+   * @returns {string} The validated `bucket`.
    * @private
    */
   _validateBucket(bucket) {
@@ -159,11 +156,13 @@ class LocalSync {
     if (bucket.includes(this._separator)) {
       throw new Error(`LocalSync "bucket" cannot contain the separator "${this._separator}".`)
     }
+    return bucket
   }
 
   /**
    * Throw if `key` is not valid.
    * @param {string} key The value to be validated.
+   * @returns {string} The validated `key`.
    * @private
    */
   _validateKey(key) {
@@ -171,11 +170,13 @@ class LocalSync {
     if (key.includes(this._separator)) {
       throw new Error(`LocalSync "key" cannot contain the separator "${this._separator}".`)
     }
+    return key
   }
 
   /**
    * Throw if `value` is not valid.
    * @param {*} value The value to be validated.
+   * @returns {string} The validated `value`.
    * @private
    */
   _validateValue(value) {
@@ -185,6 +186,7 @@ class LocalSync {
     if (!validTypes.some(valid => signature(value) === signature(valid))) {
       throw new Error(`LocalSync cannot store "value" of type ${signature(value)}`)
     }
+    return value
   }
 
   // --------------------------------------------------------
@@ -201,8 +203,7 @@ class LocalSync {
    * @returns {String} The bucket name just set.
    */
   setBucket(bucket) {
-    this._validateBucket(bucket)
-    this._bucket = bucket
+    this._bucket = this._validateBucket(bucket)
     return this._bucket
   }
 
@@ -322,30 +323,5 @@ class LocalSync {
     return this._mapKeys(key => ({[key]: this.get(key)}))
   }
 }
-
-// --------------------------------------------------------
-// Statics
-// --------------------------------------------------------
-
-/**
- * The default bucket name for new instances.
- * @type {string}
- * @static
- */
-LocalSync.BUCKET = 'default'
-
-/**
- * The default key prefix new instances.
- * @type {string}
- * @static
- */
-LocalSync.PREFIX = 'ls'
-
-/**
- * The default separator for new instances.
- * @type {string}
- * @static
- */
-LocalSync.SEPARATOR = '.'
 
 export default LocalSync

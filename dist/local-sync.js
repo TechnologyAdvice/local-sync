@@ -99,9 +99,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
 	   * @param {Object} [options={}] Instance options.
-	   * @param {String} [options.bucket=LocalSync.BUCKET] The bucket namespace to use.
-	   * @param {String} [options.prefix=LocalSync.PREFIX] The key prefix namespace to use.
-	   * @param {String} [options.separator=LocalSync.SEPARATOR] Separates prefix, bucket, and keys.
+	   * @param {String} [options.bucket=default] The bucket namespace to use.
+	   * @param {String} [options.prefix=ls] The key prefix namespace to use.
+	   * @param {String} [options.separator=.] Separates prefix, bucket, and keys.
 	   * @constructor
 	   */
 
@@ -112,17 +112,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (!(options instanceof Object)) throw new Error('LocalSync "options" must be an object.');
 
-	    var bucket = options.bucket || LocalSync.BUCKET;
-	    var prefix = options.prefix || LocalSync.PREFIX;
-	    var separator = options.separator || LocalSync.SEPARATOR;
-
-	    this._validateBucket(bucket);
-	    this._validatePrefix(prefix);
-	    this._validateSeparator(separator);
-
-	    this._bucket = bucket;
-	    this._prefix = prefix;
-	    this._separator = separator;
+	    this._bucket = this._validateBucket(options.bucket || 'default');
+	    this._prefix = this._validatePrefix(options.prefix || 'ls');
+	    this._separator = this._validateSeparator(options.separator || '.');
 	  }
 
 	  // --------------------------------------------------------
@@ -231,6 +223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Throw if `prefix` is not valid.
 	     * @param {string} prefix The value to be validated.
+	     * @returns {string} The validated `prefix`.
 	     * @private
 	     */
 
@@ -242,11 +235,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (prefix.includes(this._separator)) {
 	        throw new Error('LocalSync "prefix" cannot contain the separator "' + this._separator + '".');
 	      }
+	      return prefix;
 	    }
 
 	    /**
 	     * Throw if `separator` is not valid.
 	     * @param {string} separator The value to be validated.
+	     * @returns {string} The validated `separator`.
 	     * @private
 	     */
 
@@ -255,11 +250,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _validateSeparator(separator) {
 	      if (typeof separator !== 'string') throw new Error('LocalSync "separator" must be a string.');
 	      if (separator.length !== 1) throw new Error('LocalSync "separator" must be a single character.');
+	      return separator;
 	    }
 
 	    /**
 	     * Throw if `bucket` is not valid.
 	     * @param {string} bucket The value to be validated.
+	     * @returns {string} The validated `bucket`.
 	     * @private
 	     */
 
@@ -271,11 +268,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (bucket.includes(this._separator)) {
 	        throw new Error('LocalSync "bucket" cannot contain the separator "' + this._separator + '".');
 	      }
+	      return bucket;
 	    }
 
 	    /**
 	     * Throw if `key` is not valid.
 	     * @param {string} key The value to be validated.
+	     * @returns {string} The validated `key`.
 	     * @private
 	     */
 
@@ -286,11 +285,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (key.includes(this._separator)) {
 	        throw new Error('LocalSync "key" cannot contain the separator "' + this._separator + '".');
 	      }
+	      return key;
 	    }
 
 	    /**
 	     * Throw if `value` is not valid.
 	     * @param {*} value The value to be validated.
+	     * @returns {string} The validated `value`.
 	     * @private
 	     */
 
@@ -311,6 +312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      })) {
 	        throw new Error('LocalSync cannot store "value" of type ' + signature(value));
 	      }
+	      return value;
 	    }
 
 	    // --------------------------------------------------------
@@ -330,8 +332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'setBucket',
 	    value: function setBucket(bucket) {
-	      this._validateBucket(bucket);
-	      this._bucket = bucket;
+	      this._bucket = this._validateBucket(bucket);
 	      return this._bucket;
 	    }
 
@@ -498,32 +499,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return LocalSync;
 	})();
-
-	// --------------------------------------------------------
-	// Statics
-	// --------------------------------------------------------
-
-	/**
-	 * The default bucket name for new instances.
-	 * @type {string}
-	 * @static
-	 */
-
-	LocalSync.BUCKET = 'default';
-
-	/**
-	 * The default key prefix new instances.
-	 * @type {string}
-	 * @static
-	 */
-	LocalSync.PREFIX = 'ls';
-
-	/**
-	 * The default separator for new instances.
-	 * @type {string}
-	 * @static
-	 */
-	LocalSync.SEPARATOR = '.';
 
 	exports.default = LocalSync;
 	module.exports = exports['default'];

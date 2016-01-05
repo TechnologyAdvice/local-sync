@@ -112,22 +112,17 @@ ls.keys()
   
 * [LocalSync](#LocalSync)
     * [new LocalSync([options])](#new_LocalSync_new)
-    * _instance_
-        * [.setBucket(bucket)](#LocalSync+setBucket) ⇒ <code>String</code>
-        * [.getBucket()](#LocalSync+getBucket) ⇒ <code>String</code>
-        * [.allBuckets()](#LocalSync+allBuckets) ⇒ <code>Array.&lt;String&gt;</code>
-        * [.get(key)](#LocalSync+get) ⇒ <code>\*</code>
-        * [.set(key, value)](#LocalSync+set) ⇒ <code>\*</code>
-        * [.put(key, value)](#LocalSync+put) ⇒ <code>\*</code>
-        * [.remove(key)](#LocalSync+remove) ⇒ <code>\*</code>
-        * [.clear()](#LocalSync+clear)
-        * [.keys()](#LocalSync+keys) ⇒ <code>Array.&lt;String&gt;</code>
-        * [.values()](#LocalSync+values) ⇒ <code>Array.&lt;\*&gt;</code>
-        * [.getAll()](#LocalSync+getAll) ⇒ <code>Array.&lt;Object&gt;</code>
-    * _static_
-        * [.BUCKET](#LocalSync.BUCKET) : <code>string</code>
-        * [.PREFIX](#LocalSync.PREFIX) : <code>string</code>
-        * [.SEPARATOR](#LocalSync.SEPARATOR) : <code>string</code>
+    * [.setBucket(bucket)](#LocalSync+setBucket) ⇒ <code>String</code>
+    * [.getBucket()](#LocalSync+getBucket) ⇒ <code>String</code>
+    * [.allBuckets()](#LocalSync+allBuckets) ⇒ <code>Array.&lt;String&gt;</code>
+    * [.get(key)](#LocalSync+get) ⇒ <code>\*</code>
+    * [.set(key, value)](#LocalSync+set) ⇒ <code>\*</code>
+    * [.put(key, value)](#LocalSync+put) ⇒ <code>\*</code>
+    * [.remove(key)](#LocalSync+remove) ⇒ <code>\*</code>
+    * [.clear()](#LocalSync+clear)
+    * [.keys()](#LocalSync+keys) ⇒ <code>Array.&lt;String&gt;</code>
+    * [.values()](#LocalSync+values) ⇒ <code>Array.&lt;\*&gt;</code>
+    * [.getAll()](#LocalSync+getAll) ⇒ <code>Array.&lt;Object&gt;</code>
 
 <a name="new_LocalSync_new"></a>
 ### new LocalSync([options])
@@ -137,9 +132,9 @@ Create a new Local Sync instance.  Each instance can have its own prefix, bucket
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [options] | <code>Object</code> | <code>{}</code> | Instance options. |
-| [options.bucket] | <code>String</code> | <code>LocalSync.BUCKET</code> | The bucket namespace to use. |
-| [options.prefix] | <code>String</code> | <code>LocalSync.PREFIX</code> | The key prefix namespace to use. |
-| [options.separator] | <code>String</code> | <code>LocalSync.SEPARATOR</code> | Separates prefix, bucket, and keys. |
+| [options.bucket] | <code>String</code> | <code>default</code> | The bucket namespace to use. |
+| [options.prefix] | <code>String</code> | <code>ls</code> | The key prefix namespace to use. |
+| [options.separator] | <code>String</code> | <code>.</code> | Separates prefix, bucket, and keys. |
 
 <a name="LocalSync+setBucket"></a>
 ### localSync.setBucket(bucket) ⇒ <code>String</code>
@@ -233,21 +228,6 @@ Get all key/value pairs in the current bucket.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 **Returns**: <code>Array.&lt;Object&gt;</code> - An array of objects `{<key>: <value>}`.  
-<a name="LocalSync.BUCKET"></a>
-### LocalSync.BUCKET : <code>string</code>
-The default bucket name for new instances.
-
-**Kind**: static property of <code>[LocalSync](#LocalSync)</code>  
-<a name="LocalSync.PREFIX"></a>
-### LocalSync.PREFIX : <code>string</code>
-The default key prefix new instances.
-
-**Kind**: static property of <code>[LocalSync](#LocalSync)</code>  
-<a name="LocalSync.SEPARATOR"></a>
-### LocalSync.SEPARATOR : <code>string</code>
-The default separator for new instances.
-
-**Kind**: static property of <code>[LocalSync](#LocalSync)</code>  
 
 ***
 
