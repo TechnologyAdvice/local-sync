@@ -1,6 +1,6 @@
 {
   "name": "local-sync",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A friendly, tiny, synchronous, namespaced, and dependency free local storage solution.",
   "keywords": [
     "local",
