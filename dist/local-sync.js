@@ -297,12 +297,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_validateValue',
 	    value: function _validateValue(value) {
-	      var validTypes = ['[object Array]', '[object Boolean]', '[object Null]', '[object Number]', '[object Object]', '[object String]', '[object Undefined]'];
-	      var valueType = Object.prototype.toString.call(value);
-	      if (!validTypes.some(function (type) {
-	        return valueType === type;
+	      var _arguments = arguments;
+
+	      var validTypes = [null, undefined, true, 0, '', [], {}];
+	      var signature = function signature() {
+	        var _Object$prototype$toS;
+
+	        return (_Object$prototype$toS = Object.prototype.toString).call.apply(_Object$prototype$toS, _arguments);
+	      };
+
+	      if (!validTypes.some(function (valid) {
+	        return signature(value) === signature(valid);
 	      })) {
-	        throw new Error('LocalSync cannot store "value" of type ' + valueType);
+	        throw new Error('LocalSync cannot store "value" of type ' + signature(value));
 	      }
 	    }
 

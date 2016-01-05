@@ -179,18 +179,11 @@ class LocalSync {
    * @private
    */
   _validateValue(value) {
-    const validTypes = [
-      '[object Array]',
-      '[object Boolean]',
-      '[object Null]',
-      '[object Number]',
-      '[object Object]',
-      '[object String]',
-      '[object Undefined]',
-    ]
-    const valueType = Object.prototype.toString.call(value)
-    if (!validTypes.some(type => valueType === type)) {
-      throw new Error(`LocalSync cannot store "value" of type ${valueType}`)
+    const validTypes = [null, undefined, true, 0, '', [], {}]
+    const signature = () => Object.prototype.toString.call(...arguments)
+
+    if (!validTypes.some(valid => signature(value) === signature(valid))) {
+      throw new Error(`LocalSync cannot store "value" of type ${signature(value)}`)
     }
   }
 
