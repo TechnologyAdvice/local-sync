@@ -136,7 +136,7 @@ Create a new Local Sync instance.  Each instance can have its own prefix, bucket
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [options] | <code>Object</code> | <code>{}</code> | The bucket namespace to use. |
+| [options] | <code>Object</code> | <code>{}</code> | Instance options. |
 | [options.bucket] | <code>String</code> | <code>LocalSync.BUCKET</code> | The bucket namespace to use. |
 | [options.prefix] | <code>String</code> | <code>LocalSync.PREFIX</code> | The key prefix namespace to use. |
 | [options.separator] | <code>String</code> | <code>LocalSync.SEPARATOR</code> | Separates prefix, bucket, and keys. |

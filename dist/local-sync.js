@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var LocalSync = (function () {
 	  /**
 	   * Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
-	   * @param {Object} [options={}] The bucket namespace to use.
+	   * @param {Object} [options={}] Instance options.
 	   * @param {String} [options.bucket=LocalSync.BUCKET] The bucket namespace to use.
 	   * @param {String} [options.prefix=LocalSync.PREFIX] The key prefix namespace to use.
 	   * @param {String} [options.separator=LocalSync.SEPARATOR] Separates prefix, bucket, and keys.
