@@ -125,8 +125,8 @@ class LocalSync {
    */
   _validatePrefix(prefix) {
     if (typeof prefix !== 'string') throw new Error(`LocalSync "prefix" must be a string.`)
-    if (prefix.includes(' ')) throw new Error(`LocalSync "prefix" cannot contain spaces.`)
-    if (prefix.includes(this._separator)) {
+    if (prefix.indexOf(' ') !== -1) throw new Error(`LocalSync "prefix" cannot contain spaces.`)
+    if (prefix.indexOf(this._separator) !== -1) {
       throw new Error(`LocalSync "prefix" cannot contain the separator "${this._separator}".`)
     }
     return prefix
@@ -152,8 +152,8 @@ class LocalSync {
    */
   _validateBucket(bucket) {
     if (typeof bucket !== 'string') throw new Error(`LocalSync "bucket" must be a string.`)
-    if (bucket.includes(' ')) throw new Error(`LocalSync "bucket" cannot contain spaces.`)
-    if (bucket.includes(this._separator)) {
+    if (bucket.indexOf(' ') !== -1) throw new Error(`LocalSync "bucket" cannot contain spaces.`)
+    if (bucket.indexOf(this._separator) !== -1) {
       throw new Error(`LocalSync "bucket" cannot contain the separator "${this._separator}".`)
     }
     return bucket
@@ -167,7 +167,7 @@ class LocalSync {
    */
   _validateKey(key) {
     if (typeof key !== 'string') throw new Error(`LocalSync "key" parameter must be a string.`)
-    if (key.includes(this._separator)) {
+    if (key.indexOf(this._separator) !== -1) {
       throw new Error(`LocalSync "key" cannot contain the separator "${this._separator}".`)
     }
     return key
