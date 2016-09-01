@@ -7,12 +7,14 @@ A friendly, tiny, synchronous, namespaced, and _dependency free_ local storage s
 npm i local-sync -S
 ```
 
-## Usage
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Buckets](#buckets)
-- [set, get, put](#set-get-put)
-- [remove, clear](#remove-clear)
-- [keys, values, getAll](#keys-values-getall)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+## Usage
 
 ### Buckets
 
@@ -110,10 +112,21 @@ ls.keys()
 <a name="LocalSync"></a>
 ## API
 {{#class name="LocalSync"~}}
-  {{>member-index~}}
   {{>members~}}
 {{/class}}
 
 ***
 
-&copy; 2015 TechnologyAdvice. API Docs by [jsdoc-to-markdown](https://github.com/75lb/jsdoc-to-markdown).
+## Releasing
+
+On the latest clean `master` run a build, commit and push, then:
+
+```sh
+npm run release:major
+npm run release:minor
+npm run release:patch
+```
+
+## Credit
+
+&copy; 2016 TechnologyAdvice
