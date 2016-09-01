@@ -241,7 +241,7 @@ Get all key/value pairs in the current bucket.
 
 ## Releasing
 
-On the latest clean `master`:
+On the latest clean `master` run a build, commit and push, then:
 
 ```sh
 npm run release:major
