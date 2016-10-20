@@ -124,8 +124,8 @@ class LocalSync {
    * @private
    */
   _validatePrefix(prefix) {
-    if (typeof prefix !== 'string') throw new Error(`LocalSync "prefix" must be a string.`)
-    if (prefix.indexOf(' ') !== -1) throw new Error(`LocalSync "prefix" cannot contain spaces.`)
+    if (typeof prefix !== 'string') throw new Error('LocalSync "prefix" must be a string.')
+    if (prefix.indexOf(' ') !== -1) throw new Error('LocalSync "prefix" cannot contain spaces.')
     if (prefix.indexOf(this._separator) !== -1) {
       throw new Error(`LocalSync "prefix" cannot contain the separator "${this._separator}".`)
     }
@@ -139,8 +139,8 @@ class LocalSync {
    * @private
    */
   _validateSeparator(separator) {
-    if (typeof separator !== 'string') throw new Error(`LocalSync "separator" must be a string.`)
-    if (separator.length !== 1) throw new Error(`LocalSync "separator" must be a single character.`)
+    if (typeof separator !== 'string') throw new Error('LocalSync "separator" must be a string.')
+    if (separator.length !== 1) throw new Error('LocalSync "separator" must be a single character.')
     return separator
   }
 
@@ -151,8 +151,8 @@ class LocalSync {
    * @private
    */
   _validateBucket(bucket) {
-    if (typeof bucket !== 'string') throw new Error(`LocalSync "bucket" must be a string.`)
-    if (bucket.indexOf(' ') !== -1) throw new Error(`LocalSync "bucket" cannot contain spaces.`)
+    if (typeof bucket !== 'string') throw new Error('LocalSync "bucket" must be a string.')
+    if (bucket.indexOf(' ') !== -1) throw new Error('LocalSync "bucket" cannot contain spaces.')
     if (bucket.indexOf(this._separator) !== -1) {
       throw new Error(`LocalSync "bucket" cannot contain the separator "${this._separator}".`)
     }
@@ -166,7 +166,7 @@ class LocalSync {
    * @private
    */
   _validateKey(key) {
-    if (typeof key !== 'string') throw new Error(`LocalSync "key" parameter must be a string.`)
+    if (typeof key !== 'string') throw new Error('LocalSync "key" parameter must be a string.')
     if (key.indexOf(this._separator) !== -1) {
       throw new Error(`LocalSync "key" cannot contain the separator "${this._separator}".`)
     }
@@ -181,7 +181,7 @@ class LocalSync {
    */
   _validateValue(value) {
     const validTypes = [null, undefined, true, 0, '', [], {}]
-    const signature = () => Object.prototype.toString.call(...arguments)
+    const signature = (...args) => Object.prototype.toString.call(...args)
 
     if (!validTypes.some(valid => signature(value) === signature(valid))) {
       throw new Error(`LocalSync cannot store "value" of type ${signature(value)}`)
@@ -320,7 +320,7 @@ class LocalSync {
    * @returns {Object[]} An array of objects `{<key>: <value>}`.
    */
   getAll() {
-    return this._mapKeys(key => ({[key]: this.get(key)}))
+    return this._mapKeys(key => ({ [key]: this.get(key) }))
   }
 }
 

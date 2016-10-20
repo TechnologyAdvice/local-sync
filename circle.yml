@@ -1,0 +1,22 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  node:
+    version: 6
+
+test:
+  pre:
+    - npm run lint
+  post:
+    - bash <(curl -s https://codecov.io/bash)
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - git config --global user.email "devteam+deweybot@technologyadvice.com"
+      - git config --global user.name "deweybot"
+      - $(npm bin)/ta-script circle_ci/create_changelog

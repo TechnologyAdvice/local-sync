@@ -22,9 +22,9 @@ let cmd
 const restartCommand = () => {
   if (cmd && typeof cmd.kill === 'function') cmd.kill()
 
-  cmd = cp.spawn(command, args, {cwd: ROOT, stdio: 'inherit'})
+  cmd = cp.spawn(command, args, { cwd: ROOT, stdio: 'inherit' })
     .on('exit', code => {
-      debug(typeof code === 'number' ? `exited with code ${code}` : `killed`)
+      debug(typeof code === 'number' ? `exited with code ${code}` : 'killed')
     })
 }
 

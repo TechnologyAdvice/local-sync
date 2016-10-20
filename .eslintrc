@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "extends": [
     "ta",
     "ta/frontend"
@@ -9,10 +8,5 @@
     "__DEBUG__": false,
     "__PROD__": false,
     "$": false
-  },
-  "rules": {
-    "no-unused-expressions": 0,
-    "react/jsx-curly-spacing": 0,
-    "react/sort-comp": 0
   }
 }

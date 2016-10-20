@@ -4,11 +4,11 @@ const config = {
     libraryTarget: 'umd',
     library: 'LocalSync',
     path: 'dist',
-    filename: `local-sync.js`,
+    filename: 'local-sync.js',
   },
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'babel', include: [`${__dirname}/src`]},
+      { test: /\.js$/, loader: 'babel', include: [`${__dirname}/src`] },
     ],
   },
 }
