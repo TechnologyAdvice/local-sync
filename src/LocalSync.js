@@ -238,9 +238,7 @@ class LocalSync {
     try {
       return value === 'undefined' ? undefined : JSON.parse(value)
     } catch (e) {
-      /* eslint-disable no-console */
-      console.error('Could not JSON.parse() value:', value)
-      /* eslint-enable no-console */
+      console.error('Could not JSON.parse() value:', value) // eslint-disable-line no-console
       throw e
     }
   }
@@ -267,7 +265,7 @@ class LocalSync {
   put(key, value) {
     this._validateKey(key)
     this._validateValue(value)
-    return this.set(key, Object.assign(this.get(key), value))
+    return this.set(key, { ...this.get(key), ...value })
   }
 
   //
