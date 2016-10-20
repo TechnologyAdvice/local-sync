@@ -1,15 +1,32 @@
+import memoryStorage from './memoryStorage'
+
 // --------------------------------------------------------
 // Utils
 // --------------------------------------------------------
 
 const escapeRegExp = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 
-// abstract dependency on storage, for future adapters
-const storageGet = (key) => localStorage.getItem(key)
-const storageSet = (key, value) => localStorage.setItem(key, value)
-const storageRemove = (key) => localStorage.removeItem(key)
-const storageKey = (index) => localStorage.key(index)
-const storageLength = () => localStorage.length
+// Default to localStorage
+let storage = {
+  get: (key) => localStorage.getItem(key),
+  set: (key, value) => localStorage.setItem(key, value),
+  remove: (key) => localStorage.removeItem(key),
+  key: (index) => localStorage.key(index),
+  length: () => localStorage.length,
+}
+
+// Feature detect and fallback to in-memory on fail. Ensures localStorage:
+//  - exists
+//  - can set/get/remove
+//  - read/write values match
+try {
+  const uid = new Date
+  storage.set('uid', uid)
+  if (storage.get('uid') !== uid) storage = memoryStorage
+  storage.remove('uid')
+} catch (err) {
+  storage = memoryStorage
+}
 
 // --------------------------------------------------------
 // Local Sync
@@ -45,9 +62,9 @@ class LocalSync {
   _mapKeys(callback) {
     const result = []
     // iterate in reverse for max speed and index preservation when removing items
-    for (let i = storageLength() - 1; i >= 0; --i) {
-      const fullKey = storageKey(i)
-      if (fullKey.startsWith(this._fullBucket())) {
+    for (let i = storage.length() - 1; i >= 0; --i) {
+      const fullKey = storage.key(i)
+      if (fullKey.indexOf(this._fullBucket()) !== -1) {
         result.unshift(callback(this._parseKey(fullKey)))
       }
     }
@@ -63,9 +80,9 @@ class LocalSync {
   _mapBuckets(callback) {
     const result = []
     // iterate in reverse for max speed and index preservation when removing items
-    for (let i = storageLength() - 1; i >= 0; --i) {
-      const fullKey = storageKey(i)
-      if (fullKey.startsWith(this._prefix)) {
+    for (let i = storage.length() - 1; i >= 0; --i) {
+      const fullKey = storage.key(i)
+      if (fullKey.indexOf(this._prefix) !== -1) {
         result.unshift(callback(this._parseBucket(fullKey)))
       }
     }
@@ -181,7 +198,7 @@ class LocalSync {
    */
   _validateValue(value) {
     const validTypes = [null, undefined, true, 0, '', [], {}]
-    const signature = (...args) => Object.prototype.toString.call(...args)
+    const signature = Object.prototype.toString.call
 
     if (!validTypes.some(valid => signature(value) === signature(valid))) {
       throw new Error(`LocalSync cannot store "value" of type ${signature(value)}`)
@@ -234,7 +251,7 @@ class LocalSync {
    */
   get(key) {
     this._validateKey(key)
-    const value = storageGet(this._fullKey(key))
+    const value = storage.get(this._fullKey(key))
     try {
       return value === 'undefined' ? undefined : JSON.parse(value)
     } catch (e) {
@@ -252,7 +269,7 @@ class LocalSync {
   set(key, value) {
     this._validateKey(key)
     this._validateValue(value)
-    storageSet(this._fullKey(key), JSON.stringify(value))
+    storage.set(this._fullKey(key), JSON.stringify(value))
     return this.get(key)
   }
 
@@ -280,7 +297,7 @@ class LocalSync {
   remove(key) {
     this._validateKey(key)
     const item = this.get(key)
-    storageRemove(this._fullKey(key))
+    storage.remove(this._fullKey(key))
     return item
   }
 
