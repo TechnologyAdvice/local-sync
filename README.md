@@ -1,4 +1,4 @@
-# Local Sync 
+# Local Sync
 [![Circle CI](https://img.shields.io/circleci/project/TechnologyAdvice/local-sync/master.svg?style=flat-square)](https://circleci.com/gh/TechnologyAdvice/local-sync/tree/master)
 [![Codecov](https://img.shields.io/codecov/c/github/TechnologyAdvice/local-sync/master.svg?style=flat-square)](https://codecov.io/gh/TechnologyAdvice/local-sync)
 
@@ -134,6 +134,7 @@ ls.keys()
 <a name="LocalSync"></a>
 ## API
   <a name="new_LocalSync_new"></a>
+
 ### new LocalSync([options])
 Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
 
@@ -146,6 +147,7 @@ Create a new Local Sync instance.  Each instance can have its own prefix, bucket
 | [options.separator] | <code>String</code> | <code>.</code> | Separates prefix, bucket, and keys. |
 
 <a name="LocalSync+setBucket"></a>
+
 ### localSync.setBucket(bucket) ⇒ <code>String</code>
 Set the current `bucket`. Methods will only operate on keys in this namespace.
 
@@ -157,18 +159,21 @@ Set the current `bucket`. Methods will only operate on keys in this namespace.
 | bucket | <code>String</code> | The bucket name. |
 
 <a name="LocalSync+getBucket"></a>
+
 ### localSync.getBucket() ⇒ <code>String</code>
 Get the current `bucket`.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 **Returns**: <code>String</code> - The current bucket name.  
 <a name="LocalSync+allBuckets"></a>
+
 ### localSync.allBuckets() ⇒ <code>Array.&lt;String&gt;</code>
 Get all buckets currently in storage.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 **Returns**: <code>Array.&lt;String&gt;</code> - An array of bucket strings.  
 <a name="LocalSync+get"></a>
+
 ### localSync.get(key) ⇒ <code>\*</code>
 Get a value from the current bucket.
 
@@ -180,6 +185,7 @@ Get a value from the current bucket.
 | key | <code>String</code> | The name of the key you want to retrieve the value of. |
 
 <a name="LocalSync+set"></a>
+
 ### localSync.set(key, value) ⇒ <code>\*</code>
 Set a value in the current bucket.
 
@@ -192,6 +198,7 @@ Set a value in the current bucket.
 | value | <code>\*</code> | The value for this key. |
 
 <a name="LocalSync+put"></a>
+
 ### localSync.put(key, value) ⇒ <code>\*</code>
 Update a value in the current bucket.
 
@@ -204,6 +211,7 @@ Update a value in the current bucket.
 | value | <code>\*</code> | Value to assign to the stored object. |
 
 <a name="LocalSync+remove"></a>
+
 ### localSync.remove(key) ⇒ <code>\*</code>
 Remove a value from the current bucket.
 
@@ -215,23 +223,27 @@ Remove a value from the current bucket.
 | key | <code>String</code> | The key under which the value to be deleted is stored. |
 
 <a name="LocalSync+clear"></a>
+
 ### localSync.clear()
 Clears all values from the current bucket.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 <a name="LocalSync+keys"></a>
+
 ### localSync.keys() ⇒ <code>Array.&lt;String&gt;</code>
 Get all `key`s in the current bucket.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 **Returns**: <code>Array.&lt;String&gt;</code> - An array of `key` strings.  
 <a name="LocalSync+values"></a>
+
 ### localSync.values() ⇒ <code>Array.&lt;\*&gt;</code>
 Get all `value`s in the current bucket.
 
 **Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
 **Returns**: <code>Array.&lt;\*&gt;</code> - An array of values.  
 <a name="LocalSync+getAll"></a>
+
 ### localSync.getAll() ⇒ <code>Array.&lt;Object&gt;</code>
 Get all key/value pairs in the current bucket.
 
