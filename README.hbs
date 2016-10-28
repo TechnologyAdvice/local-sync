@@ -1,6 +1,7 @@
 # [Local Sync](https://technologyadvice.github.io/local-sync)
 [![Circle CI](https://img.shields.io/circleci/project/TechnologyAdvice/local-sync/master.svg?style=flat-square)](https://circleci.com/gh/TechnologyAdvice/local-sync/tree/master)
 [![Codecov](https://img.shields.io/codecov/c/github/TechnologyAdvice/local-sync/master.svg?style=flat-square)](https://codecov.io/gh/TechnologyAdvice/local-sync)
+[![npm](https://img.shields.io/npm/v/local-sync.svg?style=flat-square)](https://www.npmjs.com/package/local-sync)
 
 A friendly, tiny, and cross-browser local storage solution:
 
