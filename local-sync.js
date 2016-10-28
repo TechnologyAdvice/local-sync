@@ -56,13 +56,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _memoryStorage = __webpack_require__(1);
 
@@ -82,43 +82,55 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 	};
 
-	// Default to localStorage
-	var storage = {
-	  get: function get(key) {
-	    return localStorage.getItem(key);
-	  },
-	  set: function set(key, value) {
-	    return localStorage.setItem(key, value);
-	  },
-	  remove: function remove(key) {
-	    return localStorage.removeItem(key);
-	  },
-	  key: function key(index) {
-	    return localStorage.key(index);
-	  },
-	  length: function length() {
-	    return localStorage.length;
-	  }
-	};
+	var storage = function getStorageAdapter() {
+	  // Default
+	  var adapter = localStorage;
 
-	// Feature detect and fallback to in-memory on fail. Ensures localStorage:
-	//  - exists
-	//  - can set/get/remove
-	//  - read/write values match
-	try {
-	  var uid = new Date();
-	  storage.set('uid', uid);
-	  if (storage.get('uid') !== uid) storage = _memoryStorage2.default;
-	  storage.remove('uid');
-	} catch (err) {
-	  storage = _memoryStorage2.default;
-	}
+	  // Feature detect and fallback to in-memory on fail. Ensures localStorage:
+	  //  - exists
+	  //  - can set/get/remove
+	  //  - read/write values match
+	  /* eslint-disable no-console */
+	  try {
+	    var set = '' + new Date();
+	    adapter.setItem('uid', set);
+	    if (adapter.getItem('uid') !== set) {
+	      console.info('LocalSync: localStorage read/write is inconsistent, falling back to in-memory storage.');
+	      adapter = _memoryStorage2.default;
+	    }
+	    adapter.removeItem('uid');
+	  } catch (err) {
+	    console.error(err);
+	    console.info('LocalSync: localStorage was not available, falling back to in-memory storage.');
+	    adapter = _memoryStorage2.default;
+	  }
+	  /* eslint-enable no-console */
+
+	  // create storage
+	  return {
+	    get: function get(key) {
+	      return adapter.getItem(key);
+	    },
+	    set: function set(key, value) {
+	      return adapter.setItem(key, value);
+	    },
+	    remove: function remove(key) {
+	      return adapter.removeItem(key);
+	    },
+	    key: function key(index) {
+	      return adapter.key(index);
+	    },
+	    length: function length() {
+	      return adapter.length;
+	    }
+	  };
+	}();
 
 	// --------------------------------------------------------
 	// Local Sync
 	// --------------------------------------------------------
 
-	var LocalSync = (function () {
+	var LocalSync = function () {
 	  /**
 	   * Create a new Local Sync instance.  Each instance can have its own prefix, buckets, and separator.
 	   * @param {Object} [options={}] Instance options.
@@ -127,9 +139,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {String} [options.separator=.] Separates prefix, bucket, and keys.
 	   * @constructor
 	   */
-
 	  function LocalSync() {
-	    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
 	    _classCallCheck(this, LocalSync);
 
@@ -150,6 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @returns {Array} Array of callback return values.
 	   * @private
 	   */
+
 
 	  _createClass(LocalSync, [{
 	    key: '_mapKeys',
@@ -322,7 +334,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_validateValue',
 	    value: function _validateValue(value) {
 	      var validTypes = [null, undefined, true, 0, '', [], {}];
-	      var signature = Object.prototype.toString.call;
+	      var signature = function signature(arg) {
+	        return Object.prototype.toString.call(arg);
+	      };
 
 	      if (!validTypes.some(function (valid) {
 	        return signature(value) === signature(valid);
@@ -513,7 +527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }]);
 
 	  return LocalSync;
-	})();
+	}();
 
 	exports.default = LocalSync;
 	module.exports = exports['default'];
@@ -536,10 +550,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {String} key Name of the key you want to retrieve the value of.
 	   * @returns {String|null}
 	   */
-
 	  getItem: function getItem(key) {
 	    return cache[key] || null;
 	  },
+
 
 	  /**
 	   * When passed a key name and value, will add that key to the storage,
@@ -560,6 +574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 
+
 	  /**
 	   * When passed a key name, will remove that key from the storage.
 	   * @param {String} key Name of the key you want to remove.
@@ -572,6 +587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    length--;
 	  },
 
+
 	  /**
 	   * When passed a number n, returns the name of the nth key in the storage.
 	   * The order of keys is user-agent defined, so you should not rely on it.
@@ -582,6 +598,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return Object.keys(cache)[index] || null;
 	  },
 
+
 	  /**
 	   * When invoked, will empty all keys out of the storage.
 	   * @returns {undefined}
@@ -590,6 +607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    cache = {};
 	    length = 0;
 	  },
+
 
 	  /**
 	   * The length read-only property returns an integer representing the number of data items stored.
