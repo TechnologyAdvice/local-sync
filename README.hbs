@@ -1,11 +1,29 @@
-# Local Sync
+# [Local Sync](https://technologyadvice.github.io/local-sync)
 [![Circle CI](https://img.shields.io/circleci/project/TechnologyAdvice/local-sync/master.svg?style=flat-square)](https://circleci.com/gh/TechnologyAdvice/local-sync/tree/master)
 [![Codecov](https://img.shields.io/codecov/c/github/TechnologyAdvice/local-sync/master.svg?style=flat-square)](https://codecov.io/gh/TechnologyAdvice/local-sync)
 
-A friendly, tiny, synchronous, namespaced, and _dependency free_ local storage solution.
+A friendly, tiny, and cross-browser local storage solution:
+
+  ✓ No dependencies  
+  ✓ Synchronous  
+  ✓ Namespaced storage support  
+  ✓ In-memory fallback  
+
+**NPM**
+
+CommonJS build that needs to bundled in your app.
 
 ```
 npm i local-sync -S
+```
+
+**CDN**
+
+Browser ready build that can be included in a script tag.
+
+```
+https://cdn.taplatform.net/local-sync/x.x.x/local-sync.js
+https://cdn.taplatform.net/local-sync/x.x.x/local-sync.min.js
 ```
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->

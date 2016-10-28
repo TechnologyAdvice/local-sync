@@ -10,7 +10,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
 
-[*.{md,markdown}]
+[*.{hbs,md,markdown}]
 trim_trailing_whitespace = false
 
 [*.{js,json,jsx,yml,yaml}]

@@ -1,6 +1,6 @@
-import watch from 'watch'
-import path from 'path'
-import cp from 'child_process'
+const watch = require('watch')
+const path = require('path')
+const cp = require('child_process')
 const debug = require('debug')('watch')
 
 const ROOT = path.resolve(__dirname, '..')

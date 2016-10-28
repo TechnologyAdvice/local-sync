@@ -6,27 +6,39 @@ import memoryStorage from './memoryStorage'
 
 const escapeRegExp = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
 
-// Default to localStorage
-let storage = {
-  get: (key) => localStorage.getItem(key),
-  set: (key, value) => localStorage.setItem(key, value),
-  remove: (key) => localStorage.removeItem(key),
-  key: (index) => localStorage.key(index),
-  length: () => localStorage.length,
-}
+const storage = (function getStorageAdapter() {
+  // Default
+  let adapter = localStorage
 
-// Feature detect and fallback to in-memory on fail. Ensures localStorage:
-//  - exists
-//  - can set/get/remove
-//  - read/write values match
-try {
-  const uid = new Date
-  storage.set('uid', uid)
-  if (storage.get('uid') !== uid) storage = memoryStorage
-  storage.remove('uid')
-} catch (err) {
-  storage = memoryStorage
-}
+  // Feature detect and fallback to in-memory on fail. Ensures localStorage:
+  //  - exists
+  //  - can set/get/remove
+  //  - read/write values match
+  /* eslint-disable no-console */
+  try {
+    const set = '' + new Date
+    adapter.setItem('uid', set)
+    if (adapter.getItem('uid') !== set) {
+      console.info('LocalSync: localStorage read/write is inconsistent, falling back to in-memory storage.')
+      adapter = memoryStorage
+    }
+    adapter.removeItem('uid')
+  } catch (err) {
+    console.error(err)
+    console.info('LocalSync: localStorage was not available, falling back to in-memory storage.')
+    adapter = memoryStorage
+  }
+  /* eslint-enable no-console */
+
+  // create storage
+  return {
+    get: (key) => adapter.getItem(key),
+    set: (key, value) => adapter.setItem(key, value),
+    remove: (key) => adapter.removeItem(key),
+    key: (index) => adapter.key(index),
+    length: () => adapter.length,
+  }
+}())
 
 // --------------------------------------------------------
 // Local Sync
@@ -198,7 +210,7 @@ class LocalSync {
    */
   _validateValue(value) {
     const validTypes = [null, undefined, true, 0, '', [], {}]
-    const signature = Object.prototype.toString.call
+    const signature = arg => Object.prototype.toString.call(arg)
 
     if (!validTypes.some(valid => signature(value) === signature(valid))) {
       throw new Error(`LocalSync cannot store "value" of type ${signature(value)}`)

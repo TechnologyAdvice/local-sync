@@ -8,30 +8,33 @@
     "browser",
     "synchronous"
   ],
-  "main": "./dist/local-sync.js",
+  "main": "dist/commonjs/LocalSync.js",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "start": "npm run build:watch & live-server",
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "clean:dist": "rm -rf dist",
+    "start": "npm run build:watch & live-server docs/dist",
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "npm run build:commonjs && npm run build:umd && npm run build:docs",
+    "prebuild:commonjs": "rm -rf dist/commonjs && mkdir -p dist/commonjs",
+    "build:commonjs": "babel src -d dist/commonjs",
+    "prebuild:docs": "rm -rf docs/dist && mkdir -p docs/dist",
+    "build:docs": "npm run jsdoc2md && npm run doctoc && npm run build:umd && cp dist/umd/* docs/dist",
+    "prebuild:umd": "rm -rf dist/umd && mkdir -p dist/umd",
+    "build:umd": "npm run webpack -- -p --output-filename local-sync.min.js --optimize-dedupe --optimize-occurence-order --optimize-minimize && npm run webpack",
+    "build:watch": "npm run watch -- 'npm run build:docs'",
+    "doctoc": "doctoc README.md --github --maxlevel 4",
+    "jsdoc2md": "jsdoc2md --template README.hbs src/**/*.js > README.md",
     "lint": "eslint .",
     "lint:watch": "npm run watch -- 'npm run lint --silent'",
     "lint:fix": "npm run lint -- --fix",
-    "prepublish": "cross-env NODE_ENV=production npm run build:production",
     "prerelease": "npm run build && npm run lint && npm test",
     "release:major": "npm run prerelease && ta-script npm/release major",
     "release:minor": "npm run prerelease && ta-script npm/release minor",
     "release:patch": "npm run prerelease && ta-script npm/release patch",
-    "watch": "cross-env DEBUG=watch babel-node scripts/watch.js",
-    "webpack": "webpack --config webpack.config.babel.js",
-    "prebuild": "npm run clean:dist",
-    "build": "npm run webpack && npm run build:production && npm run build:docs",
-    "build:docs": "jsdoc2md --template README.hbs src/**/*.js > README.md && doctoc README.md --github --maxlevel 4",
-    "build:watch": "npm run watch -- 'npm run build'",
-    "build:production": "npm run webpack -- -p --output-filename local-sync.min.js"
+    "webpack": "webpack --config webpack.umd.js",
+    "watch": "cross-env DEBUG=watch node scripts/watch.js"
   },
   "repository": {
     "type": "git",
@@ -54,10 +57,13 @@
     "debug": "^2.2.0",
     "doctoc": "^1.2.0",
     "eslint-config-ta": "^5.2.0",
+    "gh-pages": "^0.11.0",
+    "html-webpack-plugin": "^2.24.0",
     "jsdoc-to-markdown": "^2.0.1",
+    "json": "^9.0.4",
     "live-server": "^1.1.0",
-    "ta-scripts": "^2.4.3",
+    "ta-scripts": "^2.5.2",
     "watch": "^1.0.1",
-    "webpack": "^1.12.9"
+    "webpack": "^1.13.3"
   }
 }

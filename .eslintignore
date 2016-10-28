@@ -1,3 +1,4 @@
-dist/**
 coverage/**
+dist/**
+docs/dist/**
 node_modules/**
