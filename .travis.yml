@@ -1,0 +1,33 @@
+sudo: required
+  
+language: node_js
+node_js:
+  - "6"
+  
+notifications:
+  slack:
+    rooms:
+      - technologyadvice:LsCb60NGB4CHlqqqhqJykGIW
+    template:
+      - "%{repository}@%{branch} <%{build_url}|#%{build_number}> by %{author} %{result} after %{duration}"
+      - "%{commit_message} (<%{compare_url}|%{commit}>)"
+  email:
+    on_success: never
+    on_failure: never
+    
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+  
+install:
+  - npm install --quiet
+  
+script:
+  - npm run lint
+  - npm test
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: sh deploy.sh master
+    on:
+      branch: master
