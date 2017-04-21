@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e;
+
 # configure git
 echo "...configuring git"
 git config --global user.name "deweybot"
