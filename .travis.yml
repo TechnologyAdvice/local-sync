@@ -24,6 +24,10 @@ install:
 script:
   - npm run lint
   - npm test
+  
+after_success:
+  - npm i codecov -g
+  - codecov
 
 deploy:
   - provider: script
