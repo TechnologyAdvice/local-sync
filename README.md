@@ -12,7 +12,7 @@ A friendly, tiny, and cross-browser local storage solution:
 
 **NPM**
 
-CommonJS build that needs to bundled in your app.
+CommonJS build that needs to be bundled in your app.
 
 ```
 npm i local-sync -S
