@@ -52,7 +52,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -532,9 +532,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = LocalSync;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -558,7 +558,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * When passed a key name and value, will add that key to the storage,
 	   * or update that key's value if it already exists.
-	   *
 	   * @param {String} key Name of the key you want to create/update.
 	   * @param {String} value Value you want to give the key you are creating/updating.
 	   * @returns {undefined}
@@ -567,10 +566,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (typeof value === 'undefined') {
 	      this.removeItem(key);
 	    } else {
-	      if (!cache[key]) {
-	        cache[key] = value.toString();
-	        length++;
-	      }
+	      cache[key] = value.toString();
+	      length++;
 	    }
 	  },
 
@@ -622,7 +619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = memoryStorage;
 	module.exports = exports['default'];
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;
