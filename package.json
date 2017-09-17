@@ -58,7 +58,7 @@
     "eslint-config-ta": "^5.2.0",
     "gh-pages": "^0.11.0",
     "html-webpack-plugin": "^2.24.0",
-    "jsdoc-to-markdown": "^2.0.1",
+    "jsdoc-to-markdown": "^3.0.0",
     "json": "^9.0.4",
     "live-server": "^1.1.0",
     "ta-scripts": "^2.5.2",

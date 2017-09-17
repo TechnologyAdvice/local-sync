@@ -170,7 +170,7 @@ Create a new Local Sync instance.  Each instance can have its own prefix, bucket
 ### localSync.setBucket(bucket) ⇒ <code>String</code>
 Set the current `bucket`. Methods will only operate on keys in this namespace.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>String</code> - The bucket name just set.  
 
 | Param | Type | Description |
@@ -182,21 +182,21 @@ Set the current `bucket`. Methods will only operate on keys in this namespace.
 ### localSync.getBucket() ⇒ <code>String</code>
 Get the current `bucket`.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>String</code> - The current bucket name.  
 <a name="LocalSync+allBuckets"></a>
 
 ### localSync.allBuckets() ⇒ <code>Array.&lt;String&gt;</code>
 Get all buckets currently in storage.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>Array.&lt;String&gt;</code> - An array of bucket strings.  
 <a name="LocalSync+get"></a>
 
 ### localSync.get(key) ⇒ <code>\*</code>
 Get a value from the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>\*</code> - The stored value at the specified `key`.  
 
 | Param | Type | Description |
@@ -208,7 +208,7 @@ Get a value from the current bucket.
 ### localSync.set(key, value) ⇒ <code>\*</code>
 Set a value in the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>\*</code> - The value that was just set.  
 
 | Param | Type | Description |
@@ -221,7 +221,7 @@ Set a value in the current bucket.
 ### localSync.put(key, value) ⇒ <code>\*</code>
 Update a value in the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>\*</code> - The updated value.  
 
 | Param | Type | Description |
@@ -234,7 +234,7 @@ Update a value in the current bucket.
 ### localSync.remove(key) ⇒ <code>\*</code>
 Remove a value from the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>\*</code> - The object just removed.  
 
 | Param | Type | Description |
@@ -246,27 +246,27 @@ Remove a value from the current bucket.
 ### localSync.clear()
 Clears all values from the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 <a name="LocalSync+keys"></a>
 
 ### localSync.keys() ⇒ <code>Array.&lt;String&gt;</code>
 Get all `key`s in the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>Array.&lt;String&gt;</code> - An array of `key` strings.  
 <a name="LocalSync+values"></a>
 
 ### localSync.values() ⇒ <code>Array.&lt;\*&gt;</code>
 Get all `value`s in the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>Array.&lt;\*&gt;</code> - An array of values.  
 <a name="LocalSync+getAll"></a>
 
 ### localSync.getAll() ⇒ <code>Array.&lt;Object&gt;</code>
 Get all key/value pairs in the current bucket.
 
-**Kind**: instance method of <code>[LocalSync](#LocalSync)</code>  
+**Kind**: instance method of [<code>LocalSync</code>](#LocalSync)  
 **Returns**: <code>Array.&lt;Object&gt;</code> - An array of objects `{<key>: <value>}`.  
 
 ***
